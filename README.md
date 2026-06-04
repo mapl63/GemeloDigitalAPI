@@ -559,5 +559,4 @@ Tecnologías principales:
 - Folium
 - Plotly
 - ONNX
-- FMU#   G e m e l o D i g i t a l A P I  
- 
+- FMU#
