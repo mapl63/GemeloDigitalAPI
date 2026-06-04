@@ -271,6 +271,9 @@ class WebSocketAdapter:
 
     async def send_text(self, message):
         await self.websocket.send_text(message)
+    
+    async def receive_text(self):
+        return await self.websocket.receive_text()
 
     async def ping(self):
         return None

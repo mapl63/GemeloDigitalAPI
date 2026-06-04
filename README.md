@@ -1,3 +1,8 @@
+# Despliegue en render
+```bash
+https://gemelodigitalapi.onrender.com
+```
+
 # 📌 Introducción
 El presente proyecto consiste en el desarrollo de un sistema de simulación marítima en tiempo real basado en el concepto de gemelo digital.
 
