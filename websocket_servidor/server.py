@@ -622,7 +622,7 @@ async def main():
     )
 
     try:
-        async with websockets.serve(handler, "127.0.0.1", 8765):
+        async with websockets.serve(handler, "0.0.0.0", 8765):
             print(f"Servidor WebSocket con simulación: {modo_actual}")
             print("Esperando conexion con cliente........")
             await asyncio.Future()
