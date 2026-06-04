@@ -262,10 +262,36 @@ def exportar_nmea():
 
     return RedirectResponse("/static/nmea/posicion_barco.txt")
 
+class WebSocketAdapter:
+    def __init__(self, websocket: WebSocket):
+        self.websocket = websocket
+
+    async def send(self, message):
+        await self.websocket.send_text(message)
+
+    async def send_text(self, message):
+        await self.websocket.send_text(message)
+
+    async def ping(self):
+        return None
+
+    def __aiter__(self):
+        return self
+
+    async def __anext__(self):
+        try:
+            return await self.websocket.receive_text()
+        except WebSocketDisconnect:
+            raise StopAsyncIteration
+
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    await handler(websocket)
+
+    websocket_adaptado = WebSocketAdapter(websocket)
+
+    await handler(websocket_adaptado)
 
 if __name__ == "__main__":
     uvicorn.run(
