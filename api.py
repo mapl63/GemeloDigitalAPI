@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
+from fastapi import WebSocket, WebSocketDisconnect
+import asyncio
 
 from mapa.generar_mapa import generar_mapa
 
@@ -195,10 +197,21 @@ def exportar_nmea():
 
     return RedirectResponse("/static/nmea/posicion_barco.txt")
 
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+
+    try:
+        while True:
+            mensaje = await websocket.receive_text()
+            await websocket.send_text(mensaje)
+
+    except WebSocketDisconnect:
+        print("Cliente WebSocket desconectado")
 
 if __name__ == "__main__":
     uvicorn.run(
         "api:app",
-        host="127.0.0.1",
-        port=8000
+        host="0.0.0.0",
+        port=10000
     )

@@ -130,7 +130,8 @@ let mapaCentradoAIS = false;
 // =========================
 // WEST SOCKET
 // =========================
-const ws = new WebSocket("ws://127.0.0.1:8765");
+const protocoloWS = window.location.protocol === "https:" ? "wss" : "ws";
+const ws = new WebSocket(`${protocoloWS}://${window.location.host}/ws`);
 
 let conectado = false;
 
@@ -647,13 +648,13 @@ btnStopLive.addEventListener("click", () => {
 
 btnVerRuta.addEventListener("click", () => {
 
-    fetch("http://127.0.0.1:8000/mapa/generar")
+    fetch("/mapa/generar")
         .then(res => res.json())
         .then(data => {
             console.log("RESPUESTA MAPA:", data);
 
             if(data.status === "ok"){
-                window.open("http://127.0.0.1:8000/mapa", "_blank");
+                window.open("/mapa", "_blank");
             }else{
                 alert("ERROR MAPA: " + data.detalle);
             }

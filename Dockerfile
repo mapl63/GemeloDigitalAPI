@@ -9,6 +9,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 EXPOSE 10000
-EXPOSE 8765
 
-CMD sh -c "python -m websocket_servidor.server & uvicorn api:app --host 0.0.0.0 --port 10000"
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "10000"]
