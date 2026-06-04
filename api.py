@@ -3,7 +3,28 @@ from fastapi.responses import RedirectResponse
 from fastapi import WebSocket, WebSocketDisconnect
 import asyncio
 
-from websocket_servidor.server import handler
+from websocket_servidor.server import (
+    handler,
+    estado_fmu_actual,
+    estado_ais,
+    estado_actual,
+    destino,
+    velocidad_objetivo,
+    clients,
+    get_connection as get_ws_connection,
+    simulando_fmu,
+    simulando_ais,
+    simulando_gps,
+    simulando_gps_estatico,
+    waypoints
+)
+
+from fmu.simulacion_fmu import simulacion_fmu
+from data.ais.simulacion_ais import simulacion_ais
+from gps.tiempo_real.simulacion import simulacion_gps
+from gps.estatico.simulacion_astar import simulacion_gps_estatico
+
+
 from mapa.generar_mapa import generar_mapa
 
 from mapa.generar_mapa_ais import generar_mapa_ais
@@ -21,6 +42,8 @@ BASE_DIR = os.path.dirname(__file__)
 # Ruta a la base de datos
 ruta_base_datos = os.path.join(BASE_DIR, "bbdd", "barco_gps.duckdb")
 
+ultimo_mapa = None
+ultimo_mapa_astar = None
 
 def get_connection():
     return duckdb.connect(ruta_base_datos)
@@ -41,6 +64,47 @@ ultimo_mapa_astar = None
 @app.get("/")
 def public():
     return RedirectResponse(url="/static/index.html")
+
+@app.on_event("startup")
+async def iniciar_tareas_websocket():
+    asyncio.create_task(
+        simulacion_fmu(
+            estado_fmu_actual,
+            clients,
+            get_ws_connection,
+            simulando_fmu
+        )
+    )
+
+    asyncio.create_task(
+        simulacion_ais(
+            estado_ais,
+            clients,
+            simulando_ais
+        )
+    )
+
+    asyncio.create_task(
+        simulacion_gps(
+            estado_actual,
+            destino,
+            velocidad_objetivo,
+            clients,
+            get_ws_connection,
+            simulando_gps
+        )
+    )
+
+    asyncio.create_task(
+        simulacion_gps_estatico(
+            estado_actual,
+            velocidad_objetivo,
+            clients,
+            simulando_gps_estatico,
+            waypoints,
+            get_ws_connection
+        )
+    )
 
 @app.get("/position/latest")
 def obtener_ultima_posicion():

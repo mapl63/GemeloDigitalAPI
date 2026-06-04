@@ -157,7 +157,7 @@ async def handler(websocket):
     clients.add(websocket)
 
     # ✅ 👉 ESTA LÍNEA ES LA CLAVE
-    await websocket.send(json.dumps({
+    await websocket.send_text(json.dumps({
         "tipo": "READY"
     }))
 
@@ -173,7 +173,8 @@ async def handler(websocket):
     asyncio.create_task(keep_alive(websocket))
 
     try:
-        async for message in websocket:
+        while True:
+            message = await websocket.receive_text()
 
             try:
                 data = json.loads(message)
@@ -397,7 +398,7 @@ async def handler(websocket):
 
                                     for ws in list(clients):
                                         try:
-                                            await ws.send(json.dumps(payload))
+                                            await ws.send_text(json.dumps(payload))
                                         except:
                                             clients.discard(ws)
                                     
@@ -510,7 +511,7 @@ async def handler(websocket):
 
                         for ws in list(clients):
                             try:
-                                await ws.send(json.dumps(payload))
+                                await ws.send_text(json.dumps(payload))
                             except Exception:
                                 clients.discard(ws)
                                                 
@@ -520,7 +521,7 @@ async def handler(websocket):
 
                         for ws in list(clients):
                             try:
-                                await ws.send(json.dumps(payload))
+                                await ws.send_text(json.dumps(payload))
                             except:
                                 clients.discard(ws)
 
@@ -575,8 +576,8 @@ async def handler(websocket):
 
                     print(f"✅ AIS configurado → {num} barcos en ({lat}, {lon}) radio {radio}")
 
-    except websockets.exceptions.ConnectionClosed:
-        print("Cliente desconectado.")
+    except Exception as e:
+        print("Cliente desconectado o error WebSocket:", e)
     
     finally:
         clients.discard(websocket)
