@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>AIS tiempo real</title>
+
+    <!-- Leaflet -->
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+<div id="map"></div>
+
+<script>
+/* =========================
+   MAPA
+========================= */
+
+const map = L.map("map").setView([43.5115, -8.3316], 11);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap"
+}).addTo(map);
+
+
+const colores = [
+    "blue", "red", "green", "orange", "purple",
+    "darkred", "cadetblue", "darkgreen", "black", "pink",
+    "brown", "teal", "navy", "gold", "lime",
+    "coral", "magenta", "cyan", "olive", "maroon"
+];
+
+
+function colorPorMMSI(mmsi){
+    return colores[mmsi % colores.length];
+}
+
+/* =========================
+   ICONO BARCO
+========================= */
+function barcoIcon(rumbo = 0, color= "blue") {
+    return L.divIcon({
+        html: `
+            <div style="
+                transform: rotate(${rumbo - 45}deg);
+                font-size: 22px;
+                color: ${color};
+            ">
+                <i class="fa-solid fa-location-arrow"></i>
+            </div>
+        `,
+        className: "",
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+    });
+}
+
+/* =========================
+   BARCOS AIS
+========================= */
+const barcos = {}; // mmsi -> marker
+
+/* =========================
+   WEBSOCKET
+========================= */
+const ws = new WebSocket("ws://127.0.0.1:8765");
+
+ws.onopen = () => {
+    console.log(" WebSocket conectado");
+    ws.send("START_AIS");
+};
+
+
+ws.onmessage = (e) => {
+    const data = JSON.parse(e.data);
+
+    console.log("MENSAJE WS:", data);
+
+    if (data.tipo !== "ais") return;
+
+    data.barcos.forEach(b => {
+        const { mmsi, lat, lon, cog } = b;
+
+        const color = colorPorMMSI(mmsi);
+
+        if (!barcos[mmsi]) {
+            barcos[mmsi] = L.marker(
+                    [lat, lon], 
+                    { icon: barcoIcon(cog, color) }
+                )
+                .addTo(map)
+                .bindTooltip(
+                `<b>MMSI:</b> ${mmsi}<br>
+                <b>NMEA:</b><br><code>${b.nmea}</code>`,
+                { permanent: false }
+                );
+
+        } else {
+            barcos[mmsi].setLatLng([lat, lon]);
+            barcos[mmsi].setIcon(barcoIcon(cog, color));
+            
+            barcos[mmsi].setTooltipContent(
+                `
+                    <b>MMSI:</b> ${mmsi}<br>
+                    <b>NMEA:</b><code>${b.nmea}</code>
+                `
+            );
+        }
+    });
+};
+
+ws.onerror = e => console.error("WebSocket error", e);
+</script>
+</body>
+</html>

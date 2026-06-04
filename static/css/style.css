@@ -1,0 +1,206 @@
+
+.cuerpo{
+    background: #c9ced5;
+}
+
+
+.imagen2{
+    height: 120px;
+    text-shadow: 0 0 10px purple, 0 0 15px purple;
+    border-radius: 15px;
+    transition: all 0.5s ease;
+}
+
+.imagen2:hover{
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgb(233, 0, 233), 0 0 15px rgb(233, 0, 233);
+}
+
+.imagen3{
+    height: 200px;
+    border-radius: 15px;
+    transition: all 0.5s ease;
+
+}
+
+
+.offcanvas-title{
+    color: white;
+    text-shadow: 0 0 5px white, 0 0 7px white;
+    transition: all 0.7s ease;
+}
+
+.offcanvas-title:hover{
+    color: rgb(212, 0, 255);
+    text-shadow: 0 0 5px rgb(212, 0, 255), 0 0 7px rgb(212, 0, 255);
+}
+
+.nav-link{
+    color: white;
+    text-shadow:  0 0 5px white, 0 0 7px white;
+    transition: all 0.7s ease;
+}
+
+.nav-link:hover{
+    color: red;
+    text-shadow: 0 0 5px red, 0 0 7px red;
+}
+
+.toggler-custom{
+    color: white;
+    text-shadow: 0 0 5px white, 0 0 8px white;
+    display: inline-block;
+    transition: all 0.5s ease;
+}
+
+.toggler-custom:hover{
+    color: red;
+    text-shadow: 0 0 5px red, 0 0 9px red;
+    transform: rotate(90deg) scale(1.6);
+}
+
+.offcanvas{
+    box-shadow: 0 0 16px white, 0 0 20px white;
+}
+
+
+
+.subtitulo-AIS{
+    color: rgb(0, 0, 0);
+    font-family: 'Orbitron', sans-serif;
+    white-space: normal;
+    font-size: 3.2em;
+    font-weight: bold;
+}
+
+.titulo{  
+    color: #000000;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4em;
+    font-weight: bold;
+
+}
+
+.titulos{  
+    color: #000000;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5em;
+    font-weight: bold;
+
+}
+
+.btn{
+    font-family: 'orbitron', sans-serif;
+    font-weight: bold;
+    background-color: #000000;
+    color: white;
+    border: 1px solid black;
+}
+
+
+.btn:hover {
+    background-color: transparent;
+    color: black;
+}
+
+
+p strong,
+span{
+    font-family: 'Share Tech', sans-serif;
+    
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+label{
+    font-family: 'Share Tech', sans-serif;
+    font-weight: 700;
+    
+}
+
+#rumbo-chart{
+    width: 400px;
+    height: 400px;
+}
+
+
+.leaflet-control-layers {
+    backdrop-filter: blur(8px);
+}
+
+.leaflet-control-layers {
+    background: rgba(255,255,255,0.95);
+    color: #222;
+    border-radius: 10px;
+    padding: 8px;
+    font-family: 'Orbitron', sans-serif;
+    backdrop-filter: none; /* quita el blur */
+}
+
+
+.leaflet-control-layers label:hover {
+    color: #3a86ff;
+}
+
+
+.leaflet-control-layers input[type="checkbox"],
+.leaflet-control-layers input[type="checkbox"] {
+    accent-color: #3a86ff;
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+.mapa-principal {
+    position: relative;
+    height: 55vh;
+    width: 100%;
+
+    border-radius: 25px;
+    border: 5px solid;
+
+    transition: all 0.3s ease;
+}
+
+.mapa-principal:hover {
+    transform: scale(1.01);
+
+}
+
+.subtitulo{
+    color: #000000;
+    font-weight: bold;
+    font-size: 3em;
+    font-family: 'Orbitron', sans-serif;
+
+}
+
+
+
+.grafica-fmu{
+
+    height: 65vh;
+    width: 100%;
+    max-width: none;
+
+    background: #0b0b0b;
+
+    transition: all 0.3s ease;
+
+}
+
+.grafica-fmu:hover {
+
+    transform: scale(1.01);
+    
+    box-shadow: 0 0 10px #dc0000, 0 0 20px #ff0000;
+
+}
+
+
+#loader {
+    position: fixed;
+    inset: 0;
+    background: #f8f9fa;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+}

@@ -1,0 +1,16 @@
+duckdb
+pandas
+matplotlib
+fastapi
+uvicorn
+jinja2
+fmpy
+plotly
+websockets
+onnxruntime
+numpy
+folium
+pyais
+pillow
+geopandas
+shapely

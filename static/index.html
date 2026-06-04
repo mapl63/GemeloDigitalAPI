@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba con duck y pagina html</title>
+    <link rel="icon" href="/static/favicon.ico">
+
+    <!-- Fuente para los titulos-->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech&display=swap" rel="stylesheet">
+
+    <!-- Enlaces de Boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Script de Plotly -->
+    <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+    
+    <!-- Hoja de estilos -->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!--Enlaces para el mapa interactivo  -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+</head>
+
+<body class="cuerpo">
+
+    <!-- ====================================================================================== -->
+    <!-- ======================== CABECERA ==================================================== -->
+    <!-- ====================================================================================== -->
+    <nav class="navbar navbar-dark bg-black position relative" style="height: 140px;">
+
+            <a href="http://127.0.0.1:8000/" class="navbar-brand mx-auto position-absolute start-50 translate-middle-x">
+                <img src="/static/images/logo - copia.png" alt="Logo" class="imagen2">
+            </a>
+
+        <button class="navbar-toggler me-3 ms-auto" type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#menuAside"
+                aria-controls="menuAside"
+                aria-label="Abrir menú">
+            <i class="bi bi-list fs-1 toggler-custom"></i>
+        </button>
+    </nav>
+
+    <!-- ====================================================================================== -->
+    <!-- ======================== ASIDE ==================================================== -->
+    <!-- ====================================================================================== -->
+    <div class="offcanvas offcanvas-end bg-black"
+        tabindex="-1"
+        id="menuAside"
+        aria-labelledby="menuAsideLabel">
+
+        <!-- Cabecera del aside -->
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="menuAsideLabel">
+                Menú
+            </h5>
+            <button type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Cerrar">
+            </button>
+        </div>
+
+        <!-- Contenido del menú -->
+        <div class="offcanvas-body">
+
+            <ul class="nav flex-column gap-2">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/position/latest" target="_blank">
+                        Última posición
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/fmu" target="_blank">
+                        Datos FMU
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/mapa" target="_blank">
+                        Ver Ruta GPS Mapa
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/ais/realtime" target="_blank">
+                        Mapa interactivo AIS WebSocket
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/mapa_astar" target="_blank">
+                        Mapa Estatico Matriz ASTAR
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/exportar/csv" target="_blank">
+                        Descargar CSV
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/exportar/nmea" target="_blank">
+                        Ver NMEA
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+
+    <!-- =========================
+    CONTENIDO PRINCIPAL
+    ========================= -->
+    <div class="container-fluid mt-5 text-center">
+
+        <!-- =========================
+        SELECTOR PRINCIPAL
+        ========================= -->
+        <div class="mb-4">
+            <button id="btn-gps-main" class="btn btn-success">GPS</button>
+            <button id="btn-fmu-main" class="btn btn-dark">FMU</button>
+        </div>
+
+        <!-- =========================
+        DIV GPS (OCULTO)
+        ========================= -->
+        <div id="gps-main-div" class="d-none">
+
+            <!-- Subselector -->
+            <div class="mb-3">
+                <button id="btn-gps-live" class="btn btn-primary">
+                    GPS TIEMPO REAL
+                </button>
+
+                <button id="btn-gps-astar" class="btn btn-warning">
+                    GPS ESTATICO MATRIZ A-STAR
+                </button>
+
+                <button id="btn-ais-main" class="btn btn-danger">
+                   SIMULACIÓN AIS
+                </button>
+
+            </div>
+
+            <!-- CONTENIDO PRINCIPAL-->
+            <div class="row">
+                <div id="mostrar-titulo" class="titulo mb-4"></div>
+                
+                <div class="col-md-6">
+                <!-- =========================
+                    GPS TIEMPO REAL
+                ========================= -->
+                    <div id="gps-live-div" class="d-none container-fluid">
+
+                        <h3 class="titulo" id="titulo-gps-live"></h3>
+
+                        <!-- CONTENIDO DEL GPS EN TIEMPO REAL-->
+                        <div class="row my-4 align-items-start">
+
+                            <div class="col-md-12 d-flex">
+                                <div class="w-100">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="d-flex flex-column align-items-center justify-content-center">
+                                                    <h3 class="titulos">Indicador de Rumbo</h3>
+                                                    <div id="rumbo-chart"></div>
+                                                </div>    
+                                            </div>
+                                            <div class="col-md-4">
+                                                <!-- Inputs -->
+                                                <div class="flex-grow-1 text-center">
+                                                    <h5 class="titulos"> Control del barco</h5>
+                                                    <!-- LATITUD Y LONGITUD-->
+                                                    <div class="row">
+                                                        <div class="d-flex flex-column align-items-center mb-2 col-md-6">
+                                                            <span>Latitud</span>
+                                                            <input id="live-lat" type="number" class="form-control">
+                                                        </div>
+                                                        <div class="d-flex flex-column align-items-center mb-2 col-md-6">
+                                                            <span>Longitud</span>
+                                                            <input type="number" id="live-lon" class="form-control text-center">
+                                                        </div>
+                                                        <!-- BOTONES FIJAR POSICION Y RESET-->
+                                                        <div class="my-3 d-flex justify-content-center gap-2">
+                                                            <button id="btn-set-pos" class="btn btn-dark">FIJAR POSICIÓN</button>
+                                                            <button id="btn-reset-pos" class="btn btn-danger d-none">BORRAR POSICIÓN</button>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="my-4">
+                                                    <!-- VELOCIDAD y RUMBO-->
+                                                    <div class="row">
+                                                        <div class="d-flex flex-column align-items-center mb-2 col-md-6">
+                                                            <span>Velocidad</span>
+                                                            <input type="number" id="live-vel" class="form-control text-center">
+                                                        </div>
+
+                                                        <div class="d-flex flex-column align-items-center mb-2 col-md-6">
+                                                            <span>Rumbo</span>
+                                                            <input type="number" id="live-rumbo" class="form-control text-center">
+                                                        </div>
+
+                                                    </div>
+
+                                                <!-- BOTONES START / STOP DEL GPS TIEMPO REAL-->
+                                                    <div class="my-3 d-flex justify-content-center gap-2">
+                                                        <button id="btn-start-live" class="btn btn-success">Enviar Comando <i class="bi bi-send-fill"></i></button>
+                                                        <button id="btn-stop-live" class="btn btn-danger">STOP <i class="bi bi-stop-fill"></i></button>
+                                                        <button id="btn-ver-ruta" class="btn btn-info d-none me-5">VER RUTA <i class="bi bi-eye"></i></button>
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                <!-- =========================
+                    GPS A* (ESTÁTICO)
+                ========================= -->
+                    <div id="gps-astar-div" class="d-none container">
+                        <div class="row my-4 align-items-center">
+                            <!-- CONTROLES -->
+                            <div class="container w-75 d-flex justify-content-center flex-column">
+
+                                <h3 class="subtitulo">COORDENADAS</h3>
+                                <!-- PUNTO DE PARTIDA -->
+                                 <div class="d-flex justify-content-center">
+                                     <div class="mb-4 w-50">
+                                         <h6 class="titulos">Inicio</h6>
+                                         <div class="d-flex justify-content-center align-items-center gap-2">
+                                             <input type="number" id="astar-start-lat" placeholder="Latitud" class="form-control text-center">
+                                             <input type="number" id="astar-start-lon" placeholder="Longitud" class="form-control text-center">
+                                         </div>
+                                     </div>
+                                 </div>
+                                <hr>
+                                <!-- DESTINO -->
+                                 <div class="d-flex justify-content-center">
+                                     <div class="mb-4 w-75">
+                                         <h6 class="titulos">Destino</h6>
+                                         <div class="d-flex justify-content-center align-items-center gap-1">
+                                             <input type="number" id="astar-end-lat" placeholder="Latitud" class="form-control text-center">
+                                             <input type="number" id="astar-end-lon" placeholder="Longitud" class="form-control text-center">
+                                             <input type="number" id="astar-vel" placeholder="Velocidad" class="form-control text-center">
+                                         </div>
+                                     </div>
+                                 </div>
+
+                                <!-- BOTÓNES CALCULAR RUTA Y INICIAR NAVEGACIÓN -->
+                                <div class="d-flex justify-content-center ms-3 gap-2">
+                                    <button id="btn-calc-astar" class="btn btn-warning">
+                                        CALCULAR RUTA
+                                    </button>
+
+                                    <button id="btn-start-astar" class="btn btn-primary d-none">
+                                        INICIAR NAVEGACIÓN
+                                    </button>
+
+                                    <button id="btn-stop-astar" class="btn btn-danger d-none">
+                                        DETENER NAVEGACIÓN
+                                    </button>
+                                </div>
+                                <!-- SPINNER -->                    
+                                <div id="spinner" style="display:none;" class="mt-5">
+                                    <div class="spinner-border text-success"></div>
+                                    <p id="texto-spinner">Calculando ruta... 0%</p>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <!-- =========================
+                    DIV AIS OCULTO
+                ========================= -->
+                    <div id="ais-main-div" class="d-none w-100 h-100">
+
+                        <div class="d-flex justify-content-center align-items-center flex-column h-100">
+
+                            <h5 class="subtitulo-AIS mb-4">Controles AIS</h5>
+
+                            <!-- CONTENEDOR FORM -->
+                            <div class="row">
+                                <!-- PUNTO DE PARTIDA-->
+                                <div class="col-md-6">
+                                    <h5 class="titulos mb-4">PUNTO DEL MAPA</h5>
+                                    <!-- LAT -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Lat centro</label>
+                                        <input type="number" id="ais-lat"
+                                            class="form-control text-center"
+                                            placeholder="Ej: 43.5">
+                                    </div>
+
+                                    <!-- LON -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Lon centro</label>
+                                        <input type="number" id="ais-lon"
+                                            class="form-control text-center"
+                                            placeholder="Ej: -8.3">
+                                    </div>
+
+                                    <!-- RADIO -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Radio</label>
+                                        <input type="number" id="ais-radio"
+                                            class="form-control text-center"
+                                            placeholder="Ej: 0.05">
+                                    </div>  
+                                </div>
+                                
+                                <!-- Nº BARCOS -->
+                                <div class="col-md-6">
+                                     <h5 class="titulos mb-4">NUMERO DE BARCOS</h5>
+                                    <div class="mb-3">
+                                        <label for="numBarcos" class="form-label">
+                                            Nº de barcos
+                                        </label>
+                                        <input type="number" id="numBarcos" min="1" max="100" placeholder="1" class="form-control text-center">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- BOTONES -->
+                            <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
+
+                                <button id="btn-start-ais" class="btn btn-success px-4">
+                                    ▶ START
+                                </button>
+
+                                <button id="btn-stop-ais" class="btn btn-warning px-4">
+                                    ⏹ STOP
+                                </button>
+
+                                <button id="btn-limpiar-mapa" class="btn btn-danger px-4">
+                                    🗑 LIMPIAR
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- =========================
+                   MAPA 
+                ========================= -->
+                <div class="col-md-6">
+                    <div class="container">
+                        <div id="mapa" class="mapa-principal">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+           
+        </div>
+
+        <!-- =========================
+        DIV FMU (OCULTO)
+        ========================= -->
+        <div id="fmu-main-div" class="d-none container-fluid">
+
+            <h3 class="titulo">SIMULACIÓN FMU</h3>
+
+            <div class="row mt-4 align-items-start">
+
+                <!-- IZQUIERDA → CONTROLES -->
+                <div class="col-md-3" style="height: 65vh;">
+                    
+                    <div class="d-flex align-items-center justify-content-center flex-column h-100">
+                        <h5 class="titulos">Control de la simulación</h5>
+    
+                        <p>
+                            Esta simulación muestra el comportamiento dinámico del sistema mediante variables internas.
+                        </p>
+    
+                        <div class="my-3 d-flex justify-content-center gap-2">
+                            <button id="btn-start-fmu" class="btn btn-success">
+                                ▶ START FMU
+                            </button>
+    
+                            <button id="btn-stop-fmu" class="btn btn-danger">
+                                ⏹ STOP FMU
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DERECHA → GRÁFICA -->
+                <div class="col-md-9">
+                    <div id="fmu-chart" class="grafica-fmu"></div>
+                </div>
+
+            </div>
+
+        </div>
+        
+    </div>
+
+    <!-- SPINNER WEBSOCKET -->    
+    <div id="loader" class="d-flex flex-column justify-content-center align-items-center">
+
+        <div class="spinner-border text-info mb-3" role="status"></div>
+
+        <p id="loader-text" class="mt-3 tex">
+            ⏳ Conectando con el servidor...
+        </p>
+
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

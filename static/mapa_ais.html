@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_0cb02cfb804820f58947e147c9cc4826 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_0cb02cfb804820f58947e147c9cc4826" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_0cb02cfb804820f58947e147c9cc4826 = L.map(
+                "map_0cb02cfb804820f58947e147c9cc4826",
+                {
+                    center: [43.48664100205988, -8.249846749790526],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7c7bfd3029c55ec2db323485d46faca2 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_7c7bfd3029c55ec2db323485d46faca2.addTo(map_0cb02cfb804820f58947e147c9cc4826);
+        
+    
+            var marker_081634b5d9a318eed457a95f0f1ad14f = L.marker(
+                [43.48664100205988, -8.249846749790526],
+                {
+}
+            ).addTo(map_0cb02cfb804820f58947e147c9cc4826);
+        
+    
+            var icon_d8e6628502a4681d60b2a359a6a7cece = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_081634b5d9a318eed457a95f0f1ad14f.bindTooltip(
+                `<div>
+                     
+                <b>MMSI:</b> 224000000<br>
+                <b>Timestamp (UTC):</b> 55 s<br>
+                <b>Latitud:</b> 43.486641<br>
+                <b>Longitud:</b> -8.249847<br>
+                <b>SOG:</b> 15.8 nudos<br>
+                <b>COG:</b> 47.7°<br>
+                <b>Heading:</b> 47°<br>
+                <b>ROT:</b> 0<br>
+                <b>Estado navegación:</b> 0
+            
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_081634b5d9a318eed457a95f0f1ad14f.setIcon(icon_d8e6628502a4681d60b2a359a6a7cece);
+            
+    
+            var marker_0b612d397769ff379e1b263a7e6581ac = L.marker(
+                [43.520953322694126, -8.261709262451731],
+                {
+}
+            ).addTo(map_0cb02cfb804820f58947e147c9cc4826);
+        
+    
+            var icon_ff414b161c2f1d4a97cb816edf903f4b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_0b612d397769ff379e1b263a7e6581ac.bindTooltip(
+                `<div>
+                     
+                <b>MMSI:</b> 224000001<br>
+                <b>Timestamp (UTC):</b> 55 s<br>
+                <b>Latitud:</b> 43.520953<br>
+                <b>Longitud:</b> -8.261709<br>
+                <b>SOG:</b> 9.8 nudos<br>
+                <b>COG:</b> 114.7°<br>
+                <b>Heading:</b> 114°<br>
+                <b>ROT:</b> 0<br>
+                <b>Estado navegación:</b> 0
+            
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0b612d397769ff379e1b263a7e6581ac.setIcon(icon_ff414b161c2f1d4a97cb816edf903f4b);
+            
+    
+            var marker_7eeeb486e25a16be46b4699182923df5 = L.marker(
+                [43.487986173222495, -8.248911432087134],
+                {
+}
+            ).addTo(map_0cb02cfb804820f58947e147c9cc4826);
+        
+    
+            var icon_f5254bf5142cfd4b9fc2d27f467cac5d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_7eeeb486e25a16be46b4699182923df5.bindTooltip(
+                `<div>
+                     
+                <b>MMSI:</b> 224000002<br>
+                <b>Timestamp (UTC):</b> 55 s<br>
+                <b>Latitud:</b> 43.487986<br>
+                <b>Longitud:</b> -8.248911<br>
+                <b>SOG:</b> 18.1 nudos<br>
+                <b>COG:</b> 33.5°<br>
+                <b>Heading:</b> 33°<br>
+                <b>ROT:</b> 0<br>
+                <b>Estado navegación:</b> 0
+            
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7eeeb486e25a16be46b4699182923df5.setIcon(icon_f5254bf5142cfd4b9fc2d27f467cac5d);
+            
+    
+            var marker_77d0d9d53f2d950bcdc3524373eb97e6 = L.marker(
+                [43.460025463154075, -8.284316614203604],
+                {
+}
+            ).addTo(map_0cb02cfb804820f58947e147c9cc4826);
+        
+    
+            var icon_0915036348235d2b454fedcec74e9e1a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_77d0d9d53f2d950bcdc3524373eb97e6.bindTooltip(
+                `<div>
+                     
+                <b>MMSI:</b> 224000003<br>
+                <b>Timestamp (UTC):</b> 55 s<br>
+                <b>Latitud:</b> 43.460025<br>
+                <b>Longitud:</b> -8.284317<br>
+                <b>SOG:</b> 29.3 nudos<br>
+                <b>COG:</b> 253.1°<br>
+                <b>Heading:</b> 253°<br>
+                <b>ROT:</b> 0<br>
+                <b>Estado navegación:</b> 0
+            
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_77d0d9d53f2d950bcdc3524373eb97e6.setIcon(icon_0915036348235d2b454fedcec74e9e1a);
+            
+    
+            var marker_4304864557df02466bf67114d5bd99ea = L.marker(
+                [43.44962358102865, -8.261284111640014],
+                {
+}
+            ).addTo(map_0cb02cfb804820f58947e147c9cc4826);
+        
+    
+            var icon_a478ee9aed283ec77e43e2f2aa1aed54 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_4304864557df02466bf67114d5bd99ea.bindTooltip(
+                `<div>
+                     
+                <b>MMSI:</b> 224000004<br>
+                <b>Timestamp (UTC):</b> 55 s<br>
+                <b>Latitud:</b> 43.449624<br>
+                <b>Longitud:</b> -8.261284<br>
+                <b>SOG:</b> 24.5 nudos<br>
+                <b>COG:</b> 172.4°<br>
+                <b>Heading:</b> 172°<br>
+                <b>ROT:</b> 0<br>
+                <b>Estado navegación:</b> 0
+            
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4304864557df02466bf67114d5bd99ea.setIcon(icon_a478ee9aed283ec77e43e2f2aa1aed54);
+            
+</script>
+</html>
